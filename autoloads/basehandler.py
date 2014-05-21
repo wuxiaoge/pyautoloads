@@ -24,8 +24,8 @@ class HTTPRequestHandler(tornado.web.RequestHandler):
         return self.get_argument(key,default_value)
 
     def prepare(self):
-        _directories      = self.settings.get('directories','templates')
-        _module_directory = self.settings.get('module_directory','templates_modules')
+        _directories      = self.settings.get('directories',['./templates'])
+        _module_directory = self.settings.get('module_directory','./templates_modules')
         _output_encoding  = self.settings.get('output_encoding','utf-8')
         self._template    = _Template(directories=_directories, module_directory=_module_directory, output_encoding=_output_encoding)
 
