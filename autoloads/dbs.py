@@ -9,8 +9,9 @@ from new import classobj
 
 class _Models(object):
 
-    def __init__(self,host,echo=False,pool_recycle=7200,table_names=None,column_prefix='_',schema=None):
+    def __init__(self,host,echo=False,pool_recycle=7200,table_names=None,column_prefix='_',schema=None,expire_on_commit=False):
         self.models = {}
+        self.expire_on_commit = expire_on_commit
         self.schema = schema
         self.host = host
         self.echo = echo
@@ -36,8 +37,11 @@ class _Models(object):
             self.engine = create_engine(self.host,echo=self.echo,pool_recycle=self.pool_recycle)
         return self.engine
 
-    def get_session(self):
-        pass
+    def get_db_session_pool(self):
+        if not hasattr(self,'db_session_pool'):
+            self.db_session_pool = sessionmaker(expire_on_commit=self.expire_on_commit)
+            self.db_session_pool.configure(bind=self.engine)
+        return self.db_session_pool
 
     def get_base(self):
         if not hasattr(self,'base'):
@@ -48,7 +52,9 @@ class _Models(object):
         if model_name is None:
             model_name = tablename
         _table = Table(tablename,self.base.metadata,autoload=True,autoload_with=self.engine,schema=self.schema)
-        _model = classobj(model_name, (self.base,), {'__table__' : _table, '__mapper_args__' : {'column_prefix' : self.column_prefix}}) 
+        _model = classobj(model_name, (self.base,), {'__table__' : _table, 
+                                                     '__mapper_args__' : {'column_prefix' : self.column_prefix},
+                                                     'db_session_pool' : self.get_db_session_pool()}) 
         return _model
 
 class Models(object):
