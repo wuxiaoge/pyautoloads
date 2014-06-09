@@ -1,5 +1,5 @@
 #-*- coding:utf-8 -*-
-from autoloads import DBEntityOper
+from autoloads.utils.dbhelper import DBEntityOper
 from autoloads import json_encode
 
 class Entity(object):
