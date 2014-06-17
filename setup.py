@@ -5,7 +5,7 @@ setup(
     version = "0.1",
     package_data = {}, 
     packages = find_packages(),
-    install_requires = ["pymysql","sqlalchemy","tornado","mako"],
+    install_requires = ["pymysql","sqlalchemy","tornado","mako","pipe"],
     zip_safe = False,
 )
 
