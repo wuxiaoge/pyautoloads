@@ -39,74 +39,87 @@ class EntityOper(object):
 
     @classmethod
     def add(cls,entity):
-        _db_oper = cls.db_oper_cls(cls)
+        _db_oper = cls.db_oper_cls(entity_cls = cls)
         _db_oper.add(entity)
         _db_oper.commit()
         _db_oper.close()
 
     @classmethod
     def add_all(cls,entitys):
-        _db_oper = cls.db_oper_cls(cls)
+        _db_oper = cls.db_oper_cls(entity_cls = cls)
         _db_oper.add_all(entitys)
         _db_oper.commit()
         _db_oper.close()
 
     @classmethod
     def delete(cls,entity):
-        _db_oper = cls.db_oper_cls(cls)
+        _db_oper = cls.db_oper_cls(entity_cls = cls)
         _db_oper.delete(entity)
         _db_oper.commit()
         _db_oper.close()
 
     @classmethod
-    def delete_by_where(cls,*where):
-        _db_oper = cls.db_oper_cls(cls,where)
+    def delete_by_where(cls,wheres = None):
+        _db_oper = cls.db_oper_cls(entity_cls = cls,
+                                   wheres = wheres)
         _db_oper.delete_all()
         _db_oper.commit()
         _db_oper.close()
 
     @classmethod
-    def update_by_where(cls,*where,**attrs):
-        _db_oper = cls.db_oper_cls(cls,where)
+    def update_by_where(cls,wheres = None,**attrs):
+        _db_oper = cls.db_oper_cls(entity_cls = cls,
+                                   wheres = wheres)
         _db_oper.update_all(**attrs)
         _db_oper.commit()
         _db_oper.close()
 
     @classmethod
-    def get_scalar_by_where(cls,query_expr,*where):
-        _db_oper = cls.db_oper_cls(cls,where)
+    def get_scalar_by_where(cls,query_expr,wheres = None):
+        _db_oper = cls.db_oper_cls(entity_cls = cls,
+                                   wheres = wheres)
         _count = _db_oper.get_scalar(query_expr)
         _db_oper.commit()
         _db_oper.close()
         return _count
 
     @classmethod
-    def get_first_by_where(cls,*where):
-        _db_oper = cls.db_oper_cls(cls,where)
+    def get_first_by_where(cls,wheres = None,cols = None):
+        _db_oper = cls.db_oper_cls(entity_cls = cls,
+                                   entity_cols = cols,
+                                   wheres = wheres)
         _entity = _db_oper.get_first()
         _db_oper.commit()
         _db_oper.close()
         return _entity
 
     @classmethod
-    def get_first_order_by_where(cls,order_by_cols,*where):
-        _db_oper = cls.db_oper_cls(cls,where,order_by_cols)
+    def get_first_order_by_where(cls,order_by_cols,wheres = None,cols = None):
+        _db_oper = cls.db_oper_cls(entity_cls = cls,
+                                   entity_cols = cols,
+                                   wheres = wheres,
+                                   order_by_cols = order_by_cols)
         _entity = _db_oper.get_first_order_by()
         _db_oper.commit()
         _db_oper.close()
         return _entity
 
     @classmethod
-    def get_all_by_where(cls,recordindex,pagesize,*where):
-        _db_oper = cls.db_oper_cls(cls,where)
+    def get_all_by_where(cls,recordindex,pagesize,wheres = None,cols = None):
+        _db_oper = cls.db_oper_cls(entity_cls = cls,
+                                   entity_cols = cols,
+                                   wheres = wheres)
         _entitys = _db_oper.get_all(recordindex,pagesize)
         _db_oper.commit()
         _db_oper.close()
         return _entitys
 
     @classmethod
-    def get_all_order_by_where(cls,recordindex,pagesize,order_by_cols,*where):
-        _db_oper = cls.db_oper_cls(cls,where,order_by_cols)
+    def get_all_order_by_where(cls,recordindex,pagesize,order_by_cols,wheres = None,cols = None):
+        _db_oper = cls.db_oper_cls(entity_cls = cls,
+                                   entity_cols = cols,
+                                   wheres = wheres,
+                                   order_by_cols = order_by_cols)
         _entitys = _db_oper.get_all_order_by(recordindex,pagesize)
         _db_oper.commit()
         _db_oper.close()

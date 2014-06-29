@@ -9,7 +9,7 @@ class Tornado(object):
         'json' : json_encode,
     }
     handlers = []
-    not_scan_file = []
+    not_scan_file = ['__init__']
 
     def __new__(cls,*args,**kw):
         if not hasattr(cls,'instance'):

@@ -20,8 +20,9 @@ from autoloads.utils.dbpipe import rollback
 from autoloads.utils.dbpipe import close
 
 class DBEntityOper(object):
-    def __init__(self,entity_cls,wheres = None,order_by_cols = None):
+    def __init__(self,entity_cls,entity_cols=None,wheres = None,order_by_cols = None):
         self._entity_cls = entity_cls
+        self._entity_cols = entity_cols or [entity_cls]
         self._dbsession = self._entity_cls.db_session_pool()
         self._where = wheres or []
         self._order_by_cols = order_by_cols or []
@@ -39,16 +40,16 @@ class DBEntityOper(object):
         return self._dbsession | sql_query(*cols) | query_filter(*self._where)
 
     def get_first(self):
-        return self.get_query(self._entity_cls) | first
+        return self.get_query(*self._entity_cols) | first
 
     def get_first_order_by(self):
-        return self.get_query(self._entity_cls) | order_by(*self._order_by_cols) | first
+        return self.get_query(*self._entity_cols) | order_by(*self._order_by_cols) | first
 
     def get_all(self,record_index,record_size):
-        return self.get_query(self._entity_cls) | offset(record_index) | limit(record_size) | all
+        return self.get_query(*self._entity_cols) | offset(record_index) | limit(record_size) | all
 
     def get_all_order_by(self,record_index,record_size):
-        return self.get_query(self._entity_cls) | order_by(*self._order_by_cols) | offset(record_index) | limit(record_size) | all
+        return self.get_query(*self._entity_cols) | order_by(*self._order_by_cols) | offset(record_index) | limit(record_size) | all
 
     def get_scalar(self,query_expr):
         return self.get_query(query_expr) | scalar
@@ -63,10 +64,10 @@ class DBEntityOper(object):
         return self._dbsession | delete(entity)
 
     def delete_all(self):
-        return self.get_query(self._entity_cls) | query_delete
+        return self.get_query(*self._entity_cols) | query_delete
 
     def update_all(self,**attrs):
-        return self.get_query(self._entity_cls) | update(attrs)
+        return self.get_query(*self._entity_cols) | update(attrs)
 
 
 
