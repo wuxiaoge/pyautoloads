@@ -51,5 +51,9 @@ your_model1 = your_db_models("your_table1")
 your_model2 = your_db_models("your_table2")
 #使用model的db_session_pool方法获取dbsession
 dbsession = your_model1.db_session_pool()
-your_model1_infos = dbsession.query(your_model1).filter(...).all()
+your_model1_infos = dbsession.query(your_model1).filter(...).first()
+your_model1_infos.attr1 = "test"
+dbsession.add(your_model1_infos)
+dbsession.commit()
+dbsession.close()
 ```
