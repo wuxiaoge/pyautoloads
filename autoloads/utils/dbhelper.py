@@ -15,6 +15,7 @@ from autoloads.utils.dbpipe import add_all
 from autoloads.utils.dbpipe import delete
 from autoloads.utils.dbpipe import query_delete
 
+from autoloads.utils.dbpipe import flush
 from autoloads.utils.dbpipe import refresh
 from autoloads.utils.dbpipe import commit
 from autoloads.utils.dbpipe import rollback
@@ -72,6 +73,9 @@ class DBEntityOper(object):
 
     def refresh(self,entity):
         return self._dbsession | refresh(entity)
+
+    def flush(self):
+        return self._dbsession | flush
 
 
 

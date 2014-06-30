@@ -42,8 +42,9 @@ class EntityOper(object):
         _db_oper = cls.db_oper_cls(entity_cls = cls)
         try:
             _db_oper.add(entity)
-            _db_oper.commit()
+            _db_oper.flush()
             _db_oper.refresh(entity)
+            _db_oper.commit()
         except Exception,ex:
             _db_oper.rollback()
             raise ex

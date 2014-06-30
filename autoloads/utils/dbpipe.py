@@ -63,6 +63,10 @@ def query_delete(query):
 def refresh(dbsession,entity):
     return dbsession.refresh(entity)
 
+@Pipe
+def flush(dbsession):
+    return dbsession.flush()
+
 #===================transaction======================
 @Pipe
 def commit(dbsession):
