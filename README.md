@@ -5,6 +5,7 @@ pyautoloads
 使用方式如下:
 ```python
 import functools
+from autoloads import Models
 
 MYSQL_CONFIG = dict(
     host = "localhost",
