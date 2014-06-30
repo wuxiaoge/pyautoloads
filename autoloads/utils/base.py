@@ -45,6 +45,7 @@ class EntityOper(object):
             _db_oper.commit()
         except Exception,ex:
             _db_oper.rollback()
+            raise ex
         finally:
             _db_oper.close()
 
@@ -56,6 +57,7 @@ class EntityOper(object):
             _db_oper.commit()
         except Exception,ex:
             _db_oper.rollback()
+            raise ex
         finally:
             _db_oper.close()
 
@@ -67,6 +69,7 @@ class EntityOper(object):
             _db_oper.commit()
         except Exception,ex:
             _db_oper.rollback()
+            raise ex
         finally:
             _db_oper.close()
 
@@ -79,6 +82,7 @@ class EntityOper(object):
             _db_oper.commit()
         except Exception,ex:
             _db_oper.rollback()
+            raise ex
         finally:
             _db_oper.close()
 
@@ -91,6 +95,7 @@ class EntityOper(object):
             _db_oper.commit()
         except Exception,ex:
             _db_oper.rollback()
+            raise ex
         finally:
             _db_oper.close()
 
