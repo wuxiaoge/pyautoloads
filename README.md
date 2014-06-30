@@ -18,7 +18,8 @@ MYSQL_DATABASES_TABLES = dict(
     your_db = ["your_table1","your_table2"],    
 )     
 
-def generate_models(mysql_config,databases_config,database_name,db_pool_recycle=60,echo=False,column_prefix=''):
+def generate_models(mysql_config,databases_config,database_name,db_pool_recycle=60, \
+                    echo=False,column_prefix=''):
     _host     = mysql_config['host']
     _port     = mysql_config['port']
     _user     = mysql_config['user']
@@ -41,12 +42,13 @@ def generate_models(mysql_config,databases_config,database_name,db_pool_recycle=
     return _models
 
 generate_models = functools.partial(generate_models,MYSQL_CONFIG,MYSQL_DATABASES_TABLES)
-
-your_db_models = generate_models("your_db") #按数据库名称生成该数据库对应配置的表的model(your_table1,your_table2)
-
-your_model1 = your_db_models("your_table1")  #获得表your_table1对应的model
-your_model2 = your_db_models("your_table2")  #获得表your_table2对应的model
-
-dbsession = your_model1.db_session_pool()  #使用model的db_session_pool方法获取dbsession
+#按数据库名称生成该数据库对应配置的表的model(your_table1,your_table2)
+your_db_models = generate_models("your_db") 
+#获得表your_table1对应的model
+your_model1 = your_db_models("your_table1")
+#获得表your_table2对应的model
+your_model2 = your_db_models("your_table2")
+#使用model的db_session_pool方法获取dbsession
+dbsession = your_model1.db_session_pool()
 your_model1_infos = dbsession.query(your_model1).filter(...).all()
 ```
