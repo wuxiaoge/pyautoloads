@@ -15,6 +15,7 @@ from autoloads.utils.dbpipe import add_all
 from autoloads.utils.dbpipe import delete
 from autoloads.utils.dbpipe import query_delete
 
+from autoloads.utils.dbpipe import refresh
 from autoloads.utils.dbpipe import commit
 from autoloads.utils.dbpipe import rollback
 from autoloads.utils.dbpipe import close
@@ -68,6 +69,9 @@ class DBEntityOper(object):
 
     def update_all(self,**attrs):
         return self.get_query(*self._entity_cols) | update(attrs)
+
+    def refresh(self,entity):
+        return self._dbsession | refresh(entity)
 
 
 

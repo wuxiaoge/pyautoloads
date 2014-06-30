@@ -59,6 +59,10 @@ def delete(dbsession,entity):
 def query_delete(query):
     return query.delete(synchronize_session="fetch")
 
+@Pipe
+def refresh(dbsession,entity):
+    return dbsession.refresh(entity)
+
 #===================transaction======================
 @Pipe
 def commit(dbsession):
