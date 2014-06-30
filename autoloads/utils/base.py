@@ -9,7 +9,7 @@ class Entity(object):
         map(lambda x:setattr(self,"%s" % (x),kargs[x]),kargs)
 
     def save(self):
-        self.cls.add(self)
+        self.__class__.add(self)
 
     def json_decode_attrs(self):
         """需要json化的对象属性"""
@@ -40,39 +40,59 @@ class EntityOper(object):
     @classmethod
     def add(cls,entity):
         _db_oper = cls.db_oper_cls(entity_cls = cls)
-        _db_oper.add(entity)
-        _db_oper.commit()
-        _db_oper.close()
+        try:
+            _db_oper.add(entity)
+            _db_oper.commit()
+        except Exception,ex:
+            _db_oper.rollback()
+        finally:
+            _db_oper.close()
 
     @classmethod
     def add_all(cls,entitys):
         _db_oper = cls.db_oper_cls(entity_cls = cls)
-        _db_oper.add_all(entitys)
-        _db_oper.commit()
-        _db_oper.close()
+        try:
+            _db_oper.add_all(entitys)
+            _db_oper.commit()
+        except Exception,ex:
+            _db_oper.rollback()
+        finally:
+            _db_oper.close()
 
     @classmethod
     def delete(cls,entity):
         _db_oper = cls.db_oper_cls(entity_cls = cls)
-        _db_oper.delete(entity)
-        _db_oper.commit()
-        _db_oper.close()
+        try:
+            _db_oper.delete(entity)
+            _db_oper.commit()
+        except Exception,ex:
+            _db_oper.rollback()
+        finally:
+            _db_oper.close()
 
     @classmethod
     def delete_by_where(cls,wheres = None):
         _db_oper = cls.db_oper_cls(entity_cls = cls,
                                    wheres = wheres)
-        _db_oper.delete_all()
-        _db_oper.commit()
-        _db_oper.close()
+        try:
+            _db_oper.delete_all()
+            _db_oper.commit()
+        except Exception,ex:
+            _db_oper.rollback()
+        finally:
+            _db_oper.close()
 
     @classmethod
     def update_by_where(cls,wheres = None,**attrs):
         _db_oper = cls.db_oper_cls(entity_cls = cls,
                                    wheres = wheres)
-        _db_oper.update_all(**attrs)
-        _db_oper.commit()
-        _db_oper.close()
+        try:
+            _db_oper.update_all(**attrs)
+            _db_oper.commit()
+        except Exception,ex:
+            _db_oper.rollback()
+        finally:
+            _db_oper.close()
 
     @classmethod
     def get_scalar_by_where(cls,query_expr,wheres = None):
