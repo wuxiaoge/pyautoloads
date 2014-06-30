@@ -43,6 +43,7 @@ class EntityOper(object):
         try:
             _db_oper.add(entity)
             _db_oper.commit()
+            _db_oper.refresh(entity)
         except Exception,ex:
             _db_oper.rollback()
             raise ex
