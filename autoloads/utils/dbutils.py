@@ -57,6 +57,18 @@ class RequestParser(Parser):
                     request_parserd_dict[attr] = py_type(args[attr][-1]) if py_type in self.__class__.parser_types else value
         return request_parserd_dict
 
+class EntityParser(Parser):
+    def __init__(self,entity,**attrs):
+        self.entity = entity
+        self.attrs = attrs
+
+    def parser(self):
+        if self.entity:
+            for attr in self.attrs:
+                if hasattr(self.entity,attr):
+                    setattr(self.entity,attr,self.attrs[attr])
+        return self.entity
+
 
 
 
