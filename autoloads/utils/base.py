@@ -111,6 +111,17 @@ class EntityOper(object):
         return _count
 
     @classmethod
+    def get_statistics_by_group(cls,recordindex,pagesize,group_by_list,order_by_cols = None,wheres = None,cols = None):
+        _db_oper = cls.db_oper_cls(entity_cls = cls,
+                                   entity_cols = cols,
+                                   wheres = wheres,
+                                   order_by_cols = order_by_cols)
+        _statistics = _db_oper.get_statistics_by_group(group_by_list,recordindex,pagesize)
+        _db_oper.commit()
+        _db_oper.close()
+        return _statistics
+
+    @classmethod
     def get_first_by_where(cls,wheres = None,cols = None):
         _db_oper = cls.db_oper_cls(entity_cls = cls,
                                    entity_cols = cols,
