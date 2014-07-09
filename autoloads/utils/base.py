@@ -24,7 +24,7 @@ class Entity(object):
         _attrs = self.json_decode_attrs() or self.__mapper__.columns.keys()
         _parser_funcs = self.json_attr_parser_funcs() or {}
         attr_items = [(_attr,_parser_funcs[_attr](getattr(self,_attr)) if _parser_funcs.has_key(_attr) else getattr(self,_attr)) for _attr in _attrs]
-        attr_items = map(lambda x:(x[0][column_prefix_len:],x[1] if isinstance(x[1],(list,dict)) else unicode(x[1])),attr_items)
+        attr_items = map(lambda x:(x[0][column_prefix_len:],x[1]),attr_items)
         attr_dict = dict(attr_items)
         return attr_dict
 
