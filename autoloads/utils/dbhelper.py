@@ -57,7 +57,7 @@ class DBEntityOper(object):
         return self.get_query(query_expr) | scalar
 
     def get_statistics_by_group(self,group_by_list,record_index,record_size):
-        return self.get_query(*self._entity_cols) | group_by(*group_by_list) | order_by(*self._order_by_cols) | offset(record_index) | limit(record_size) | all()
+        return self.get_query(*self._entity_cols) | group_by(*group_by_list) | order_by(*self._order_by_cols) | offset(record_index) | limit(record_size) | all
 
     def add(self,entity):
         return self._dbsession | add(entity)
