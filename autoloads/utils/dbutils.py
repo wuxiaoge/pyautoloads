@@ -24,7 +24,7 @@ class BuildFilter(Parser):
         cls = self._entity.__class__
         if hasattr(cls,"filter_attr_dict") and cls.filter_attr_dict:
             filter_attr_dict = cls.filter_attr_dict
-            filter_list = map(lambda x:getattr(cls,x)==filter_attr_dict[x](getattr(self._entity,x)) if getattr(self._entity,x) is not None else "",filter_attr_dict.keys())
+            filter_list = map(lambda x:filter_attr_dict[x](getattr(self._entity,x)) if getattr(self._entity,x) is not None else "",filter_attr_dict.keys())
         else:
             attrs = cls.__mapper__.columns.keys()
             filter_list = map(lambda x:getattr(cls,x)==getattr(self._entity,x) if getattr(self._entity,x) else "",attrs)
