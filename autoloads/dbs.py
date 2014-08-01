@@ -73,19 +73,19 @@ class Models(object):
 #column_prefix参数表示在列名前加上该参数的值来作为该model的属性
 #若tables为None则Models将会吧绑定的数据库中的所有表都生成对应的model
 #Models根据绑定的数据库生成的modol你指定的或全部生成，所以返回的_models是多个model对象的字典，表名为key，对应的value则是它的model对象
-#_models = Models('192.168.1.18',3306,'xuchuan','xuchuan','wodfan',tables=['sku'],echo=True,column_prefix='attr_')
+#_models = Models('localhost',3306,'root','','you_db',tables=['you_table1',...],echo=True,column_prefix='attr_')
 #_engine = _models.get_engine() #获取生成该model的数据库引擎
 #DBSession = sessionmaker(bind=_engine) #生成DBSession
-#sku = _models('sku') #根据表明获取对应的model，若不传入表名或存入None则返回该数据库中的表所对应的所有model
-#class Sku(sku): pass #因人而异，上一行返回的sku本身就是一个class，该处Sku继承sku，下面代码使用了Sku，这样可以增强可读性，一眼可看出Sku是个class，是个model
+#you_table1 = _models('you_table1') #根据表明获取对应的model，若不传入表名或存入None则返回该数据库中的表所对应的所有model
+#class YouTable1(you_table1): pass #因人而异，上一行返回的sku本身就是一个class，该处Sku继承sku，下面代码使用了Sku，这样可以增强可读性，一眼可看出Sku是个class，是个model
 #
 #if __name__ == '__main__':
 #    dbsession = DBSession()
-#    _skus = dbsession.query(Sku).order_by(Sku.attr_sku_id.desc()).limit(5).all() #该model设置了属性前缀，所以所有的属性都是前缀加上列名
-#    _sku_list = []
-#    for _sku in _skus:
-#        _sku_list.append({'id':_sku.attr_sku_id,'url':_sku.attr_url,'from':_sku.attr_from}) #同上
-#    print _sku_list
+#    _infos = dbsession.query(YouTable1).order_by(YouTable1.attr_id.desc()).limit(5).all() #该model设置了属性前缀，所以所有的属性都是前缀加上列名
+#    _info_list = []
+#    for _info in _infos:
+#        _info_list.append({'id':_info.attr_id,'col1':_info.attr_col1,'col2':_info.attr_col2}) #同上
+#    print _info_list
 #    dbsession.close()
 #
 #以上Models工具类采用的是单例模式，这样就不用担心在多出使用时会产生重复的model,可避免占用多余的数据库链接
