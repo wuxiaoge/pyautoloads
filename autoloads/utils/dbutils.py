@@ -28,7 +28,7 @@ class BuildFilter(Parser):
         else:
             attrs = cls.__mapper__.columns.keys()
             filter_list = map(lambda x:getattr(cls,x)==getattr(self._entity,x) if getattr(self._entity,x) else "",attrs)
-        return filter(lambda x:x,filter_list)
+        return filter_list
 
 class RequestParser(Parser):
     parser_types = [int,float,Decimal]
