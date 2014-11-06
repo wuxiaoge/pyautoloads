@@ -38,12 +38,13 @@ class Entity(object):
 class EntityOper(object):
 
     @classmethod
-    def add(cls,entity):
+    def add(cls,entity,refresh=True):
         _db_oper = cls.db_oper_cls(entity_cls = cls)
         try:
             _db_oper.add(entity)
-            _db_oper.flush()
-            _db_oper.refresh(entity)
+            if refresh:
+                _db_oper.flush()
+                _db_oper.refresh(entity)
             _db_oper.commit()
         except Exception,ex:
             _db_oper.rollback()
@@ -52,12 +53,13 @@ class EntityOper(object):
             _db_oper.close()
 
     @classmethod
-    def add_all(cls,entitys):
+    def add_all(cls,entitys,refresh=True):
         _db_oper = cls.db_oper_cls(entity_cls = cls)
         try:
             _db_oper.add_all(entitys)
-            _db_oper.flush()
-            map(lambda x:_db_oper.refresh(x),entitys)
+            if refresh:
+                _db_oper.flush()
+                map(lambda x:_db_oper.refresh(x),entitys)
             _db_oper.commit()
         except Exception,ex:
             _db_oper.rollback()
