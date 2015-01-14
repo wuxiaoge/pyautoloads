@@ -60,7 +60,7 @@ dbsession.close()
 ```
 (handler自动加载及简单请求参数处理)
 models.py
-```
+```python
 from models import Entity #包含实体对象的简单操作
 from models import EntityOper #数据库操作封装
 
