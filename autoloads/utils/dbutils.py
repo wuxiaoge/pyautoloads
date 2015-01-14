@@ -26,7 +26,7 @@ class BuildFilter(Parser):
             filter_attr_dict = cls.filter_attr_dict
             filter_list = map(lambda x:filter_attr_dict[x](getattr(self._entity,x)) if getattr(self._entity,x) is not None else "",filter_attr_dict.keys())
         else:
-            attrs = cls.__mapper__.columns.keys()
+            attrs = cls.columns().keys()
             filter_list = map(lambda x:getattr(cls,x)==getattr(self._entity,x) if getattr(self._entity,x) else "",attrs)
         return filter_list
 
@@ -36,7 +36,7 @@ class RequestParser(Parser):
     def __init__(self,cls,request):
         self.cls = cls
         self.request_arguments = copy.deepcopy(request.arguments)
-        self.column_prefix = self.cls.__mapper_args__["column_prefix"]
+        self.column_prefix = self.cls.column_prefix()
 
     def parser(self):
         if not(self.cls) and not(self.request_arguments):
@@ -49,7 +49,7 @@ class RequestParser(Parser):
                 if args.has_key(attr):
                     request_parserd_dict[attr] = self.cls.request_parser_attr_dict[attr](args[attr][-1])
         else:
-            attrs = dict(self.cls.__mapper__.columns.items())
+            attrs = dict(self.cls.columns().items())
             request_parserd_dict = {}
             for attr in args.keys():
                 if attrs.has_key(attr):

@@ -19,9 +19,17 @@ class Entity(object):
         """需要进行数据处理的属性方法"""
         pass
 
+    @classmethod
+    def column_prefix(cls):
+        return cls.__mapper_args__["column_prefix"]
+
+    @classmethod
+    def columns(cls):
+        return cls.__mapper__.columns
+
     def json(self):
-        column_prefix_len = len(self.__class__.__mapper_args__["column_prefix"])
-        _attrs = self.json_decode_attrs() or self.__mapper__.columns.keys()
+        column_prefix_len = len(self.__class__.column_prefix())
+        _attrs = self.json_decode_attrs() or self.__class__.columns().keys()
         _parser_funcs = self.json_attr_parser_funcs() or {}
         attr_items = [(_attr,_parser_funcs[_attr](getattr(self,_attr)) if _parser_funcs.has_key(_attr) else getattr(self,_attr)) for _attr in _attrs]
         attr_items = map(lambda x:(x[0][column_prefix_len:],x[1]),attr_items)
