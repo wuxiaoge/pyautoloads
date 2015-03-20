@@ -40,7 +40,6 @@ class Tornado(object):
     def scan(self,scan_dir):
         _scan_file_list = self._get_scan_file(scan_dir)
         for _scan_file in _scan_file_list:
-            print ' scan url => ',_scan_file
             __import__(_scan_file)
 
     def route(self,path = '/',**kw):
