@@ -11,9 +11,10 @@ class _Template(object):
     """
 
     def __new__(cls, directories, module_directory, output_encoding='utf-8'):
-        """
-            :param directories:         mako模板文件存储位置
-            :param module_directory:    mako模板系统编译后py文件位置
+        """在实例化时创建 "_lookup" 属性.
+
+            :param directories:         mako模板文件存储位置, 列表形式: ['./templates']
+            :param module_directory:    mako模板系统编译后py文件位置(缓冲目录)
             :param output_encoding:     输出字符串的编码
         """
 
@@ -24,16 +25,20 @@ class _Template(object):
         return cls._instance
 
     def _init_template(self, directories, module_directory, output_encoding):
-        """
-            :param directories:         mako模板文件存储位置
-            :param module_directory:    mako模板系统编译后py文件位置
+        """创建实例 "_lookup" 属性.
+
+            :param directories:         mako模板文件存储位置, 列表形式: ['./templates']
+            :param module_directory:    mako模板系统编译后py文件位置(缓冲目录)
             :param output_encoding:     输出字符串的编码
         """
+
         self._lookup = TemplateLookup(directories=directories,
                                       module_directory=module_directory,
                                       output_encoding=output_encoding)
 
     def render_template(self, template_name, **kwargs):
+        """使用指定数据, 渲染指定模板.
+        """
         _template = self._lookup.get_template(template_name)
         return _template.render(**kwargs)
 
@@ -43,6 +48,8 @@ class HttpRequestHandler(tornado.web.RequestHandler):
     """
 
     def prepare(self):
+        """装载Application配置数据, 完成'模板引擎的封装类'的初始化.
+        """
         _directories = self.settings.get('directories', ['./templates'])
         _module_directory = self.settings.get('module_directory', './templates_modules')
         _output_encoding = self.settings.get('output_encoding', 'utf-8')
@@ -52,6 +59,8 @@ class HttpRequestHandler(tornado.web.RequestHandler):
                                    output_encoding=_output_encoding)
 
     def render_template(self, template_name, **kwargs):
+        """使用指定数据, 渲染指定模板.
+        """
         return self._template.render_template(template_name, **kwargs)
 
     @staticmethod

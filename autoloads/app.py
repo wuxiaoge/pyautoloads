@@ -7,6 +7,9 @@ import six
 
 
 class Tornado(object):
+    """视图URL处理装饰器.
+    """
+
     format_funcs = {
         'string': lambda s: s,
         'json': json_encode,
@@ -81,4 +84,3 @@ class Tornado(object):
 
 
 app = Tornado()
-

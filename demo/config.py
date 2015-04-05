@@ -9,13 +9,13 @@ MYSQL_CONFIG = dict(
     host="localhost",
     port=3306,
     user="root",
-    passwd="123456",
+    password="123456",
     charset="utf8",
 )
 
 # 定义你数据库里及对应的表
 MYSQL_DATABASES_TABLES = dict(
-    test_db=["table_one", "table_two"],
+    test_db=["table_one", "table_two", "table_user"],
 )
 
 
@@ -25,25 +25,23 @@ def generate_models(mysql_config, databases_config, database_name,
 
         :param mysql_config:        MySQL配置
         :param databases_config:    数据库配置
-
         :param database_name:　      数据库名称
-
         :param db_pool_recycle:     数据库连接池
-        :param echo:                回显
-        :param column_prefix:       行前缀
+        :param echo:                回显SQL语句
+        :param column_prefix:       属性(列)前缀
     """
 
     _host = mysql_config['host']
     _port = mysql_config['port']
     _user = mysql_config['user']
-    _password = mysql_config['passwd']
+    _password = mysql_config['password']
     _database = database_name
     _charset = mysql_config['charset']
     _tables = databases_config[_database]
     _models = Models(host=_host,
                      port=_port,
                      user=_user,
-                     passwd=_password,
+                     password=_password,
                      database=_database,
                      tables=_tables,
                      charset=_charset,

@@ -6,7 +6,7 @@ from autoloads.utils.dbpipe import sql_query, query_filter, offset, limit, first
     flush, refresh, commit, rollback, close
 
 
-class DBEntityOper(object):
+class DBEntityHelper(object):
     def __init__(self, entity_cls, entity_cols=None, wheres=None, order_by_cols=None):
         """
             :param entity_cls:      实体类

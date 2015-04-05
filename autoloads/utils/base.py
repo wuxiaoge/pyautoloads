@@ -1,7 +1,7 @@
 #!usr/bin/env python
 # coding: utf-8
 
-from autoloads.utils.dbhelper import DBEntityOper
+from autoloads.utils.dbhelper import DBEntityHelper
 from tornado.escape import json_encode
 
 
@@ -9,7 +9,7 @@ class Entity(object):
     """包含实体对象的简单操作.
     """
 
-    db_operate_cls = DBEntityOper
+    db_operate_cls = DBEntityHelper
 
     def __init__(self, **kargs):
         map(lambda x: setattr(self, "%s" % x, kargs[x]), kargs)
@@ -56,7 +56,7 @@ class Entity(object):
         return self.__str__()
 
 
-class EntityOper(object):
+class EntityHelper(object):
     """数据库操作封装.
     """
 

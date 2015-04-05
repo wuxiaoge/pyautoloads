@@ -12,14 +12,15 @@ class _Models(object):
     def __init__(self, host, echo=False, pool_recycle=7200,
                  table_names=None, column_prefix='_', schema=None, expire_on_commit=False):
         """
-            :param host:            连接地址
-            :param echo:            执行过程是否输出SQL
+            :param host:                连接地址
+            :param echo:                执行过程是否输出SQL
+            :param schema:              所属schema
+            :param table_names:         表名
+            :param pool_recycle:        数据库连接池重连时间
+            :param column_prefix:       Model的属性前缀
+            :param expire_on_commit:    是否提交后失效, SQLAlchemy session的机制.
 
-            :param schema:          所属schema
-            :param table_names:
-            :param pool_recycle:    数据库连接池重连时间
-            :param column_prefix:   Model的属性前缀
-            :param expire_on_commit:
+        注意: 若table_names为None则Models将会把绑定的数据库中的所有表都生成对应的model.
         """
 
         self.models = {}
@@ -38,7 +39,7 @@ class _Models(object):
             self.table_names = table_names
         for _table_ in self.table_names:
             _table_name = '{0}'.format(_table_)
-            self.models[_table_name] = self._generate_model(_table_name, self.engine)
+            self.models[_table_name] = self._generate_model(_table_name)
 
     def __call__(self, table_name=None):
         if table_name is None:
@@ -68,11 +69,11 @@ class _Models(object):
             self.base = declarative_base()
         return self.base
 
-    def _generate_model(self, tablename, engine, model_name=None):
+    def _generate_model(self, table_name, model_name=None):
         if model_name is None:
-            model_name = tablename
+            model_name = table_name
 
-        _table = Table(tablename, self.base.metadata,
+        _table = Table(table_name, self.base.metadata,
                        autoload=True, autoload_with=self.engine, schema=self.schema)
         _model = classobj(model_name, (self.base,),
                           {'__table__': _table,
