@@ -20,7 +20,7 @@ MYSQL_DATABASES_TABLES = dict(
 
 
 def generate_models(mysql_config, databases_config, database_name,
-                    db_pool_recycle=60, echo=False, column_prefix=''):
+                    db_pool_recycle=60, echo=False, column_prefix='_'):
     """"从数据库表生成模型
 
         :param mysql_config:        MySQL配置

@@ -2,7 +2,7 @@
 # coding: utf-8
 
 from autoloads import app, BaseRequestHandler, BuildFilter, RequestParser
-from models import User
+from models.models import User
 
 
 @app.route('/test')
@@ -24,5 +24,4 @@ class Test(BaseRequestHandler):
         cus = [cu.json() for cu in cus]
 
         # 创建固定格式的返回数据结构.
-        result = self.build_response_json(success=True, message=cus)
-        self.write(result)
+        self.response_json(success=True, message=cus)
