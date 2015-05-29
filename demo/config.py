@@ -25,7 +25,7 @@ def generate_models(mysql_config, databases_config, database_name,
 
         :param mysql_config:        MySQL配置
         :param databases_config:    数据库配置
-        :param database_name:　      数据库名称
+        :param database_name:　     数据库名称
         :param db_pool_recycle:     数据库连接池
         :param echo:                回显SQL语句
         :param column_prefix:       属性(列)前缀
@@ -35,8 +35,8 @@ def generate_models(mysql_config, databases_config, database_name,
     _port = mysql_config['port']
     _user = mysql_config['user']
     _password = mysql_config['password']
-    _database = database_name
     _charset = mysql_config['charset']
+    _database = database_name
     _tables = databases_config[_database]
     _models = Models(host=_host,
                      port=_port,
@@ -51,11 +51,17 @@ def generate_models(mysql_config, databases_config, database_name,
                      schema=_database)
     return _models
 
-
+# 构建基本配置
 generate_models = functools.partial(generate_models, MYSQL_CONFIG, MYSQL_DATABASES_TABLES)
 
-# 按数据库名称生成该数据库对应配置的表的model(table_one,table_two)
-my_db_models = generate_models("test_db")
+# 按数据库名称(如:"test_db")生成该数据库对应配置的表
+# Number_1: 属于Init()过程
+my_db_models = generate_models("test_db", echo=True) 
+
+# 绑定数据表, 构建model, 如:(table_one,table_two)
+# Number_2: 属于call()过程
+# table_one = my_db_models("table_one")
+# table_two = my_db_models("table_two")
 
 if __name__ == '__main__':
 
@@ -66,11 +72,14 @@ if __name__ == '__main__':
     db_session = table_one.db_session_pool()
 
     table_one_info = db_session.query(table_one).filter().first()
+    print table_one_info, "="*5
     if table_one_info:
-        table_one_info.name = "test"
-        table_one_info.text = "test_text"
+        table_one_info._name = "test"
+        table_one_info._text = "test_text"
     else:
-        pass
+        table_one_info = table_one()
+        table_one_info._name = "test"
+        # pass
 
     db_session.add(table_one_info)
     db_session.commit()

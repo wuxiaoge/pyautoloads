@@ -15,7 +15,7 @@ class User(user, BaseModel):
         _id=lambda x: User.id == int(x),
     )
 
-    # 供RequestParser使用, 请求参数字典的生成处理, 请求参数根据该字典生成对应model的属性.
+    # 供RequestParser使用, 请求参数(self.request)的字典生成处理, 根据该项生成包含对应model的属性的字典.
     request_parser_attr_dict = dict(
         _id=lambda x: int(x),
     )
@@ -24,7 +24,7 @@ class User(user, BaseModel):
     def json_decode_attrs(self):
         return ["_id"]
 
-    # 生成json时, 对应字段的处理方式.
+    # 生成json()时, 对应字段的处理方式.
     def json_attr_parser_funcs(self):
         return dict(
             _id=int,
