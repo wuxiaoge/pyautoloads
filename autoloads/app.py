@@ -1,9 +1,10 @@
 #!usr/bin/env python
 # coding: utf-8
 
+from __future__ import print_function
+
 import os
 from tornado.escape import json_encode
-import six
 
 
 class Tornado(object):
@@ -61,7 +62,7 @@ class Tornado(object):
 
         _scan_file_list = self._get_scan_file(scan_dir)
         for _scan_file in _scan_file_list:
-            six.print_((' scan url => ', _scan_file))
+            print((' scan url => ', _scan_file))
             __import__(_scan_file)
 
     def route(self, path='/', **kw):
