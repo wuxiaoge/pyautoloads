@@ -189,3 +189,6 @@ class EntityHelper(object):
         db_operate.commit()
         db_operate.close()
         return entities
+
+# 为兼容之前使用此组件的老项目
+EntityOper = EntityHelper

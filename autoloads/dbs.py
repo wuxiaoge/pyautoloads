@@ -85,14 +85,14 @@ class _Models(object):
 class Models(object):
     _models = {}
 
-    def __new__(cls, host, port, user, password,
+    def __new__(cls, host, port, user, passwd,
                 database, tables=None, charset='utf8', echo=False,
                 pool_recycle=7200, column_prefix='_', schema=None):
         """
             :param host:        连接地址
             :param port:        连接端口
             :param user:        账户
-            :param password:    密码
+            :param passwd:      密码
 
             :param database:    数据库
             :param tables:      表名
@@ -108,7 +108,7 @@ class Models(object):
 
         if database not in cls._models:
             _connection_str = 'mysql+pymysql://{0}:{1}@{2}:{3}/{4}?charset={5}'.format(
-                user, password, host, port, database, charset)
+                user, passwd, host, port, database, charset)
 
             cls._models[database] = _Models(_connection_str, echo=echo,
                                             pool_recycle=pool_recycle,

@@ -8,4 +8,11 @@ from autoloads.basehandler import BaseRequestHandler
 from autoloads.utils.base import Entity, EntityHelper
 from autoloads.utils.dbutils import BuildFilter, RequestParser, EntityParser
 
-EntityOper = EntityHelper  # 为兼容重命名之前使用此项目
+# 为兼容之前使用此组件的老项目
+EntityOper = EntityHelper
+# noinspection PyUnresolvedReferences
+from sqlalchemy.orm import sessionmaker
+# noinspection PyUnresolvedReferences
+from tornado.escape import xhtml_escape, xhtml_unescape, json_encode, \
+    json_decode, url_escape, url_unescape, parse_qs_bytes, utf8, \
+    to_unicode, to_basestring, recursive_unicode, linkify
