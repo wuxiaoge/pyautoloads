@@ -61,7 +61,7 @@ class EntityHelper(object):
     """
 
     @classmethod
-    def add(cls, entity, refresh=True):
+    def add(cls, entity, refresh=True, result=False):
         db_operate = cls.db_operate_cls(entity_cls=cls)
         try:
             db_operate.add(entity)
@@ -74,6 +74,9 @@ class EntityHelper(object):
             raise ex
         finally:
             db_operate.close()
+
+        if result:
+            return entity
 
     @classmethod
     def add_all(cls, entities, refresh=True):
