@@ -16,7 +16,7 @@ version = '0.2.2'
 setup(
     name="pyautoloads",
     version=version,
-    description="hichao-test is a Tool that HTTP Test base on linux curl.",
+    description="python web and databases's tools.",
     long_description=README + '\n\n' + NEWS,
     license='MIT License',
     author='wuxiaoge',
