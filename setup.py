@@ -11,18 +11,18 @@ NEWS = open(os.path.join(here, 'CHANGELOG.rst')).read()
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 zip_safe = not on_rtd
 
-version = '0.2.2.1'
+version = '0.2.2.2'
 
 setup(
-    name="pyautoloads",
+    name="autoloads",
     version=version,
     description="python web and databases's tools.",
     long_description=README + '\n\n' + NEWS,
     license='MIT License',
     author='wuxiaoge',
     author_email='returnliu@gmail.com',
-    keywords='pyautoloads',
-    url='https://github.com/wujuguang/pyautoloads.git',
+    keywords='autoloads',
+    url='https://github.com/wujuguang/autoloads.git',
     package_data={},
     packages=find_packages(),
     install_requires=["pymysql", "sqlalchemy", "tornado", "mako", "pipe"],

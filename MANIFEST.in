@@ -3,12 +3,12 @@ include MANIFEST.in
 include CHANGELOG.rst
 include setup.py
 
-include pyautoloads.egg-info/PKG-INFO
-include pyautoloads.egg-info/SOURCES.txt
-include pyautoloads.egg-info/dependency_links.txt
-include pyautoloads.egg-info/requires.txt
-include pyautoloads.egg-info/top_level.txt
-include pyautoloads.egg-info/zip-safe
+include autoloads.egg-info/PKG-INFO
+include autoloads.egg-info/SOURCES.txt
+include autoloads.egg-info/dependency_links.txt
+include autoloads.egg-info/requires.txt
+include autoloads.egg-info/top_level.txt
+include autoloads.egg-info/zip-safe
 
 include autoloads/__init__.py
 include autoloads/app.py
