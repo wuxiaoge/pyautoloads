@@ -61,7 +61,7 @@ class EntityHelper(object):
     """
 
     @classmethod
-    def add(cls, entity, refresh=True, result=False):
+    def add(cls, entity, refresh=True):
         db_operate = cls.db_operate_cls(entity_cls=cls)
         try:
             db_operate.add(entity)
@@ -75,17 +75,14 @@ class EntityHelper(object):
         finally:
             db_operate.close()
 
-        if result:
-            return entity
-
     @classmethod
-    def add_all(cls, entities, refresh=True):
+    def add_all(cls, entitys, refresh=True):
         db_operate = cls.db_operate_cls(entity_cls=cls)
         try:
-            db_operate.add_all(entities)
+            db_operate.add_all(entitys)
             if refresh:
                 db_operate.flush()
-                map(lambda x: db_operate.refresh(x), entities)
+                map(lambda x: db_operate.refresh(x), entitys)
             db_operate.commit()
         except Exception, ex:
             db_operate.rollback()
@@ -138,12 +135,12 @@ class EntityHelper(object):
         return _count
 
     @classmethod
-    def get_statistics_by_group(cls, page_index, pagesize, group_by_list, order_by_cols=None, wheres=None, cols=None):
+    def get_statistics_by_group(cls, recordindex, pagesize, group_by_list, order_by_cols=None, wheres=None, cols=None):
         db_operate = cls.db_operate_cls(entity_cls=cls,
                                         entity_cols=cols,
                                         wheres=wheres,
                                         order_by_cols=order_by_cols)
-        _statistics = db_operate.get_statistics_by_group(group_by_list, page_index, pagesize)
+        _statistics = db_operate.get_statistics_by_group(group_by_list, recordindex, pagesize)
         db_operate.commit()
         db_operate.close()
         return _statistics
@@ -170,22 +167,22 @@ class EntityHelper(object):
         return _entity
 
     @classmethod
-    def get_all_by_where(cls, page_index, pagesize, wheres=None, cols=None):
+    def get_all_by_where(cls, recordindex, pagesize, wheres=None, cols=None):
         db_operate = cls.db_operate_cls(entity_cls=cls,
                                         entity_cols=cols,
                                         wheres=wheres)
-        entities = db_operate.get_all(page_index, pagesize)
+        entities = db_operate.get_all(recordindex, pagesize)
         db_operate.commit()
         db_operate.close()
         return entities
 
     @classmethod
-    def get_all_order_by_where(cls, page_index, pagesize, order_by_cols, wheres=None, cols=None):
+    def get_all_order_by_where(cls, recordindex, pagesize, order_by_cols, wheres=None, cols=None):
         db_operate = cls.db_operate_cls(entity_cls=cls,
                                         entity_cols=cols,
                                         wheres=wheres,
                                         order_by_cols=order_by_cols)
-        entities = db_operate.get_all_order_by(page_index, pagesize)
+        entities = db_operate.get_all_order_by(recordindex, pagesize)
         db_operate.commit()
         db_operate.close()
         return entities

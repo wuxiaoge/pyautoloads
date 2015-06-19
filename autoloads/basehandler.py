@@ -48,6 +48,9 @@ class HttpRequestHandler(tornado.web.RequestHandler):
     """实现模板的渲染的类.
     """
 
+    def getParameter(self, key, default_value=None):
+        return self.get_argument(key, default_value)
+
     def prepare(self):
         """装载Application配置数据, 完成'模板引擎的封装类'的初始化.
         """
@@ -69,6 +72,9 @@ class HttpRequestHandler(tornado.web.RequestHandler):
     @staticmethod
     def response_json(**kwargs):
         return json_encode(kwargs)
+
+    # 为兼容之前使用此组件的老项目
+    build_response_json = response_json
 
 
 class BaseRequestHandler(HttpRequestHandler):
