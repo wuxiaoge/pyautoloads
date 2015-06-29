@@ -1,8 +1,8 @@
 #!usr/bin/env python
 # coding: utf-8
 
-from autoloads.utils.dbhelper import DBEntityHelper
 from tornado.escape import json_encode
+from autoloads.utils.dbhelper import DBEntityHelper
 
 
 class Entity(object):
@@ -17,7 +17,7 @@ class Entity(object):
     def save(self):
         self.__class__.add(self)
 
-    def json_decode_attribute(self):
+    def json_decode_attrs(self):
         """需要json化的对象属性.
         """
         pass
@@ -37,7 +37,7 @@ class Entity(object):
 
     def json(self):
         column_prefix_len = len(self.__class__.column_prefix())
-        _attribute = self.json_decode_attribute() or self.__class__.columns().keys()
+        _attribute = self.json_decode_attrs() or self.__class__.columns().keys()
         _parser_funcs = self.json_attr_parser_funcs() or {}
         attr_items = [
             (_attr,
