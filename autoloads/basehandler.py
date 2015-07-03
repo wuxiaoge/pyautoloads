@@ -70,11 +70,8 @@ class HttpRequestHandler(tornado.web.RequestHandler):
         return self._template.render_template(template_name, **kwargs)
 
     @staticmethod
-    def response_json(**kwargs):
+    def build_response_json(**kwargs):
         return json_encode(kwargs)
-
-    # 为兼容之前使用此组件的老项目
-    build_response_json = response_json
 
 
 class BaseRequestHandler(HttpRequestHandler):

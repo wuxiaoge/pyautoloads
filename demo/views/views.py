@@ -5,8 +5,23 @@ from autoloads import app, BaseRequestHandler, BuildFilter, RequestParser
 from models.models import User
 
 
+class BaseHandler(BaseRequestHandler):
+    def response_json(self, data="", curr_page_index=1, page_count=0, success=True, **kw):
+        kargs = dict(
+            success=success,
+            message=dict(
+                curr_page_index=curr_page_index,
+                page_count=page_count,
+                data=data,
+                **kw))
+
+        result = self.build_response_json(**kargs)
+        self.write(result)
+        self.finish()
+
+
 @app.route('/test')
-class Test(BaseRequestHandler):
+class Test(BaseHandler):
     def get(self):
         # 从request中获取参数, 并对应User实体类生成对应的dict.
         rp = RequestParser(User, self.request)
