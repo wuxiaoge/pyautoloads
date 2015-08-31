@@ -3,7 +3,7 @@
 
 import tornado.web
 from mako.lookup import TemplateLookup
-from tornado.escape import json_encode
+from autoloads.utils import json_encode
 
 
 class _Template(object):

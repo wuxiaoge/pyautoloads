@@ -4,7 +4,7 @@
 from __future__ import print_function
 
 import os
-from tornado.escape import json_encode
+from autoloads.utils import json_encode
 
 
 class Tornado(object):
@@ -62,7 +62,7 @@ class Tornado(object):
 
         _scan_file_list = self._get_scan_file(scan_dir)
         for _scan_file in _scan_file_list:
-            print((' scan url => ', _scan_file))
+            # print((' scan url => ', _scan_file))
             __import__(_scan_file)
 
     def route(self, path='/', **kw):

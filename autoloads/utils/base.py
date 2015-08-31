@@ -1,7 +1,7 @@
 #!usr/bin/env python
 # coding: utf-8
 
-from tornado.escape import json_encode
+from autoloads.utils import json_encode
 from autoloads.utils.dbhelper import DBEntityHelper
 
 
