@@ -11,7 +11,7 @@ NEWS = open(os.path.join(here, 'CHANGELOG.rst')).read()
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 zip_safe = not on_rtd
 
-version = '0.2.2.3'
+version = '0.2.2.4'
 
 setup(
     name="autoloads",
