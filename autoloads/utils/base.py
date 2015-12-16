@@ -2,6 +2,7 @@
 # coding: utf-8
 
 from autoloads.utils import json_encode
+from autoloads.utils.datatype import json_data_encode
 from autoloads.utils.dbhelper import DBEntityHelper
 
 
@@ -50,7 +51,12 @@ class Entity(object):
 
     def __str__(self):
         attr_dict = self.json()
-        return json_encode(attr_dict)
+
+        try:
+            result = json_encode(attr_dict)
+        except TypeError:
+            result = json_data_encode(attr_dict)
+        return result
 
     def __repr__(self):
         return self.__str__()
@@ -186,6 +192,7 @@ class EntityHelper(object):
         db_operate.commit()
         db_operate.close()
         return entities
+
 
 # 为兼容之前使用此组件的老项目
 EntityOper = EntityHelper
