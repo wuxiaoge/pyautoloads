@@ -1,19 +1,22 @@
-#-*- coding:utf-8 -*-
+#!usr/bin/env python
+# coding: utf-8
 
-from tornado.escape import xhtml_escape
-from tornado.escape import xhtml_unescape
-from tornado.escape import json_encode
-from tornado.escape import json_decode
-from tornado.escape import url_escape
-from tornado.escape import url_unescape
-from tornado.escape import parse_qs_bytes
-from tornado.escape import utf8
-from tornado.escape import to_unicode
-from tornado.escape import to_basestring
-from tornado.escape import recursive_unicode #转换成unicode
-from tornado.escape import linkify #生成超链接
+from autoloads.dbs import Models
+from autoloads.app import app
+from autoloads.basehandler import BaseRequestHandler
 
-from .dbs import sessionmaker
-from .dbs import Models
-from .app import app
-from .basehandler import BaseRequestHandler
+from autoloads.utils.base import Entity, EntityHelper
+from autoloads.utils.dbutils import BuildFilter, RequestParser, EntityParser
+
+# 为兼容之前使用此组件的老项目
+EntityOper = EntityHelper
+
+try:
+    # noinspection PyUnresolvedReferences
+    from sqlalchemy.orm import sessionmaker
+    # noinspection PyUnresolvedReferences
+    from tornado.escape import xhtml_escape, xhtml_unescape, json_encode, \
+        json_decode, url_escape, url_unescape, parse_qs_bytes, utf8, \
+        to_unicode, to_basestring, recursive_unicode, linkify
+except ImportError:
+    pass

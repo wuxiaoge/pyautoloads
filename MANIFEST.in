@@ -1,0 +1,21 @@
+include README.rst
+include MANIFEST.in
+include CHANGELOG.rst
+include setup.py
+
+include autoloads.egg-info/PKG-INFO
+include autoloads.egg-info/SOURCES.txt
+include autoloads.egg-info/dependency_links.txt
+include autoloads.egg-info/requires.txt
+include autoloads.egg-info/top_level.txt
+include autoloads.egg-info/zip-safe
+
+include autoloads/__init__.py
+include autoloads/app.py
+include autoloads/dbs.py
+include autoloads/basehandler.py
+include autoloads/utils/__init__.py
+include autoloads/utils/base.py
+include autoloads/utils/dbhelper.py
+include autoloads/utils/dbpipe.py
+include autoloads/utils/dbutils.py
